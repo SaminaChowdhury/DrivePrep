@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "64005452651",
+    "project_id": "driveprep-3c0f0",
+    "storage_bucket": "driveprep-3c0f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64005452651:android:c01a117cddd509ccbc122e",
+        "android_client_info": {
+          "package_name": "com.example.drive_prep"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd4UcytxNVtzJFzTbmUoYS5vsTXcVYadE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

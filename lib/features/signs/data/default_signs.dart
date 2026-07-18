@@ -1,0 +1,90 @@
+import '../models/road_sign.dart';
+
+const defaultRoadSigns = <RoadSign>[
+  RoadSign(
+    id: 'sign_stop',
+    title: 'Stop Sign',
+    meaning: 'You must stop completely at the line and give way to traffic on the main road.',
+    category: 'Regulatory',
+    imageAssetPath: 'assets/signs/sign_stop.svg',
+  ),
+  RoadSign(
+    id: 'sign_give_way',
+    title: 'Give Way',
+    meaning: 'Give way to traffic on the major road. Stop if necessary.',
+    category: 'Regulatory',
+    imageAssetPath: 'assets/signs/sign_give_way.svg',
+  ),
+  RoadSign(
+    id: 'sign_speed_30',
+    title: 'Speed Limit 30',
+    meaning: 'Maximum speed is 30 mph. Often found in built-up areas with street lighting.',
+    category: 'Regulatory',
+    imageAssetPath: 'assets/signs/sign_speed_30.svg',
+  ),
+  RoadSign(
+    id: 'sign_no_entry',
+    title: 'No Entry',
+    meaning: 'Do not enter this road. Traffic is prohibited from this direction.',
+    category: 'Regulatory',
+    imageAssetPath: 'assets/signs/sign_no_entry.svg',
+  ),
+  RoadSign(
+    id: 'sign_no_overtaking',
+    title: 'No Overtaking',
+    meaning: 'Overtaking is prohibited. Do not cross the centre line to pass other vehicles.',
+    category: 'Regulatory',
+    imageAssetPath: 'assets/signs/sign_no_overtaking.svg',
+  ),
+  RoadSign(
+    id: 'sign_roundabout',
+    title: 'Roundabout Ahead',
+    meaning: 'A roundabout is ahead. Prepare to give way to traffic from the right.',
+    category: 'Warning',
+    imageAssetPath: 'assets/signs/sign_roundabout.svg',
+  ),
+  RoadSign(
+    id: 'sign_pedestrian_crossing',
+    title: 'Pedestrian Crossing',
+    meaning: 'A zebra or light-controlled crossing is ahead. Watch for pedestrians.',
+    category: 'Warning',
+    imageAssetPath: 'assets/signs/sign_pedestrian_crossing.svg',
+  ),
+  RoadSign(
+    id: 'sign_school',
+    title: 'School Crossing',
+    meaning: 'School crossing patrol may operate. Reduce speed and watch for children.',
+    category: 'Warning',
+    imageAssetPath: 'assets/signs/sign_school.svg',
+  ),
+  RoadSign(
+    id: 'sign_traffic_lights',
+    title: 'Traffic Lights Ahead',
+    meaning: 'Traffic signals are ahead. Be prepared to stop on amber or red.',
+    category: 'Warning',
+    imageAssetPath: 'assets/signs/sign_traffic_lights.svg',
+  ),
+  RoadSign(
+    id: 'sign_national_speed',
+    title: 'National Speed Limit',
+    meaning: 'National speed limit applies: 60 mph on single carriageways, 70 mph on dual carriageways and motorways (unless otherwise signed).',
+    category: 'Information',
+    imageAssetPath: 'assets/signs/sign_national_speed.svg',
+  ),
+  RoadSign(
+    id: 'sign_one_way',
+    title: 'One Way Traffic',
+    meaning: 'Traffic flows in one direction only. Do not travel against the arrow.',
+    category: 'Information',
+    imageAssetPath: 'assets/signs/sign_one_way.svg',
+  ),
+  RoadSign(
+    id: 'sign_parking',
+    title: 'Parking',
+    meaning: 'Parking is permitted in the designated area. Check local restrictions on times and payment.',
+    category: 'Information',
+    imageAssetPath: 'assets/signs/sign_parking.svg',
+  ),
+];
+
+const roadSignCategories = ['Regulatory', 'Warning', 'Information'];
