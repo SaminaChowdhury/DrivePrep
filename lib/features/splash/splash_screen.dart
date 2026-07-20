@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/services/hive_service.dart';
-import '../../core/services/auth_service.dart';
 import '../../core/services/offline_sync_service.dart';
+import '../auth/providers/auth_provider.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -63,10 +63,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
       });
     }
 
-    // Check secure storage authentication status
-    final authService = ref.read(authServiceProvider);
-    final isLoggedIn = await authService.isLoggedIn();
-    final isGuest = await authService.isGuest();
+    // Restore guest or verified Firebase session only
+    await ref.read(authProvider.notifier).checkAuthStatus();
+    final authState = ref.read(authProvider);
 
     for (int i = 9; i <= 10; i++) {
       await Future.delayed(const Duration(milliseconds: 100));
@@ -78,7 +77,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
     }
 
     if (mounted) {
-      if (isLoggedIn || isGuest) {
+      if (authState == AuthState.authenticated || authState == AuthState.guest) {
         context.go('/home');
       } else {
         context.go('/login');
@@ -148,29 +147,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Brand Icon
-                    Container(
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withAlpha(25),
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white.withAlpha(40), width: 1.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.cyan.withAlpha(50),
-                            blurRadius: 30,
-                            spreadRadius: 2,
-                          )
-                        ],
-                      ),
-                      child: const Icon(
-                        Icons.directions_car_rounded,
-                        size: 72,
-                        color: Colors.white,
+                    ClipRect(
+                      child: Align(
+                        alignment: Alignment.center,
+                        heightFactor: 0.6,
+                        child: Image.asset(
+                          'assets/logo2.png',
+                          width: 230,
+                          height: 230,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 28),
-                    // Main Title
                     const Text(
                       'DrivePrep',
                       style: TextStyle(
@@ -183,7 +171,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
                     const SizedBox(height: 8),
                     // Subtitle
                     Text(
-                      'UK Driving Theory 4-in-1 Suite',
+                      'Learn Driving: The Ultimate 4-in-1 Suite',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

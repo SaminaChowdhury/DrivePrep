@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -5,21 +6,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../auth/providers/auth_provider.dart';
-import '../../../core/services/api_client.dart';
 
-// Profile Provider to fetch current user's profile when authenticated
+// Profile from Firebase Auth when signed in (verified users only).
 final userProfileProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
   final authState = ref.watch(authProvider);
   if (authState != AuthState.authenticated) return null;
 
-  final apiClient = ref.read(apiClientProvider);
-  try {
-    final response = await apiClient.get('/auth/me');
-    return response.data as Map<String, dynamic>?;
-  } catch (e) {
-    debugPrint('[Profile Error] Failed to fetch: $e');
-    return null;
-  }
+  final user = FirebaseAuth.instance.currentUser;
+  if (user == null) return null;
+
+  return {
+    'email': user.email,
+    'username': user.displayName ?? user.email?.split('@').first,
+    'full_name': user.displayName,
+  };
 });
 
 class HomeScreen extends ConsumerWidget {

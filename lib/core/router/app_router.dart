@@ -10,6 +10,7 @@ import '../../features/home/screens/home_screen.dart';
 import '../../features/progress/screens/progress_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../features/auth/screens/forgot_password_screen.dart';
+import '../../features/auth/screens/verify_email_screen.dart';
 import '../../features/hazard/screens/hazard_dashboard_screen.dart';
 import '../../features/theory/screens/mock_test_screen.dart';
 import '../../features/theory/screens/theory_dashboard_screen.dart';
@@ -52,6 +53,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/forgot-password',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: '/verify-email',
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) {
+          final email = state.extra is String ? state.extra as String : null;
+          return VerifyEmailScreen(email: email);
+        },
       ),
 
       // 3. Detail Feature Screens

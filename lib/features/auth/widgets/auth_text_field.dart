@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'auth_glass_background.dart';
+
 class AuthTextField extends StatefulWidget {
   final String label;
   final String? hint;
@@ -38,9 +40,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
     _isObscured = widget.obscureText;
     _focusNode = FocusNode();
     _focusNode.addListener(() {
-      setState(() {
-        _isFocused = _focusNode.hasFocus;
-      });
+      setState(() => _isFocused = _focusNode.hasFocus);
     });
   }
 
@@ -55,7 +55,6 @@ class _AuthTextFieldState extends State<AuthTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Label
         Padding(
           padding: const EdgeInsets.only(left: 4, bottom: 8),
           child: Text(
@@ -63,35 +62,32 @@ class _AuthTextFieldState extends State<AuthTextField> {
             style: GoogleFonts.outfit(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Colors.white.withAlpha(220),
+              color: AuthColors.alabaster.withAlpha(230),
               letterSpacing: 0.3,
             ),
           ),
         ),
-        // Animated field container
         AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
+          duration: const Duration(milliseconds: 220),
           curve: Curves.easeInOut,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
+            color: AuthColors.inputFill,
             border: Border.all(
               color: _isFocused
-                  ? Colors.white.withAlpha(120)
-                  : Colors.white.withAlpha(40),
-              width: _isFocused ? 1.5 : 1.0,
+                  ? AuthColors.roseGoldSolid.withAlpha(140)
+                  : AuthColors.roseGold,
+              width: _isFocused ? 1.4 : 1.0,
             ),
-            color: _isFocused
-                ? Colors.white.withAlpha(25)
-                : Colors.white.withAlpha(15),
             boxShadow: _isFocused
                 ? [
                     BoxShadow(
-                      color: Colors.cyan.withAlpha(20),
-                      blurRadius: 12,
+                      color: AuthColors.roseGoldSolid.withAlpha(35),
+                      blurRadius: 14,
                       spreadRadius: 1,
                     ),
                   ]
-                : [],
+                : null,
           ),
           child: TextFormField(
             controller: widget.controller,
@@ -102,15 +98,15 @@ class _AuthTextFieldState extends State<AuthTextField> {
             validator: widget.validator,
             style: GoogleFonts.outfit(
               fontSize: 15,
-              color: Colors.white,
+              color: AuthColors.alabaster,
               fontWeight: FontWeight.w400,
             ),
-            cursorColor: Colors.white.withAlpha(200),
+            cursorColor: AuthColors.roseGoldSolid,
             decoration: InputDecoration(
               hintText: widget.hint,
               hintStyle: GoogleFonts.outfit(
                 fontSize: 14,
-                color: Colors.white.withAlpha(80),
+                color: AuthColors.alabaster.withAlpha(90),
                 fontWeight: FontWeight.w300,
               ),
               prefixIcon: widget.prefixIcon != null
@@ -120,15 +116,12 @@ class _AuthTextFieldState extends State<AuthTextField> {
                         widget.prefixIcon,
                         size: 20,
                         color: _isFocused
-                            ? Colors.white.withAlpha(220)
-                            : Colors.white.withAlpha(120),
+                            ? AuthColors.roseGoldSolid
+                            : AuthColors.alabaster.withAlpha(140),
                       ),
                     )
                   : null,
-              prefixIconConstraints: const BoxConstraints(
-                minWidth: 44,
-                minHeight: 20,
-              ),
+              prefixIconConstraints: const BoxConstraints(minWidth: 44, minHeight: 20),
               suffixIcon: widget.obscureText
                   ? Padding(
                       padding: const EdgeInsets.only(right: 8),
@@ -138,24 +131,17 @@ class _AuthTextFieldState extends State<AuthTextField> {
                               ? Icons.visibility_off_rounded
                               : Icons.visibility_rounded,
                           size: 20,
-                          color: Colors.white.withAlpha(120),
+                          color: AuthColors.alabaster.withAlpha(140),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            _isObscured = !_isObscured;
-                          });
-                        },
+                        onPressed: () => setState(() => _isObscured = !_isObscured),
                       ),
                     )
                   : null,
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 16,
-              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               errorStyle: GoogleFonts.outfit(
                 fontSize: 12,
-                color: const Color(0xFFFF6B6B),
+                color: const Color(0xFFE8A0A0),
                 fontWeight: FontWeight.w400,
               ),
               errorBorder: InputBorder.none,
