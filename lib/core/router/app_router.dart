@@ -11,7 +11,6 @@ import '../../features/progress/screens/progress_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
 import '../../features/auth/screens/forgot_password_screen.dart';
 import '../../features/auth/screens/verify_email_screen.dart';
-import '../../features/hazard/screens/hazard_dashboard_screen.dart';
 import '../../features/theory/screens/mock_test_screen.dart';
 import '../../features/theory/screens/theory_dashboard_screen.dart';
 import '../../features/theory/screens/theory_quiz_screen.dart';
@@ -83,11 +82,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/theory-results',
         parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state) => const TheoryResultsScreen(),
-      ),
-      GoRoute(
-        path: '/hazard',
-        parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state) => const HazardDashboardScreen(),
       ),
       GoRoute(
         path: '/highway',

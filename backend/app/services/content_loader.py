@@ -27,8 +27,3 @@ def get_road_signs() -> list[dict]:
 @lru_cache
 def get_highway_code() -> list[dict]:
     return _load_json("highway_code.json")
-
-
-@lru_cache
-def get_hazard_videos() -> list[dict]:
-    return _load_json("hazard_videos.json")

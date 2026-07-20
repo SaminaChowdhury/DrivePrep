@@ -82,51 +82,8 @@ def export_highway() -> None:
     print(f"Wrote {len(items)} highway code entries")
 
 
-def export_hazard_videos() -> None:
-    videos = [
-        {
-            "id": "hazard_01",
-            "title": "Suburban Street",
-            "description": "Watch for pedestrians stepping out between parked cars.",
-            "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-            "thumbnailUrl": None,
-            "durationSeconds": 15,
-            "category": "Urban",
-            "hazardTimestampSeconds": 8,
-            "order": 1,
-        },
-        {
-            "id": "hazard_02",
-            "title": "Roundabout Approach",
-            "description": "Identify when a cyclist enters your path at a mini-roundabout.",
-            "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-            "thumbnailUrl": None,
-            "durationSeconds": 15,
-            "category": "Junctions",
-            "hazardTimestampSeconds": 10,
-            "order": 2,
-        },
-        {
-            "id": "hazard_03",
-            "title": "Dual Carriageway",
-            "description": "Spot the vehicle merging from a slip road onto the main carriageway.",
-            "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-            "thumbnailUrl": None,
-            "durationSeconds": 15,
-            "category": "Motorway",
-            "hazardTimestampSeconds": 11,
-            "order": 3,
-        },
-    ]
-    (DATA_DIR / "hazard_videos.json").write_text(
-        json.dumps(videos, indent=2, ensure_ascii=False), encoding="utf-8"
-    )
-    print(f"Wrote {len(videos)} hazard videos")
-
-
 if __name__ == "__main__":
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     export_questions()
     export_signs()
     export_highway()
-    export_hazard_videos()

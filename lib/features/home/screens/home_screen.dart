@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../auth/providers/auth_provider.dart';
+import '../../progress/providers/progress_provider.dart';
 
 // Profile from Firebase Auth when signed in (verified users only).
 final userProfileProvider = FutureProvider<Map<String, dynamic>?>((ref) async {
@@ -38,6 +39,31 @@ class _HomeScreenContent extends ConsumerWidget {
     final isDark = theme.brightness == Brightness.dark;
     final authState = ref.watch(authProvider);
     final profileAsync = ref.watch(userProfileProvider);
+    final analytics = ref.watch(progressAnalyticsProvider);
+
+    final hasData =
+        analytics.totalCompletedTests > 0 || analytics.questionsAnswered > 0;
+    final passProbability = hasData ? analytics.averageScore.clamp(0.0, 1.0) : 0.0;
+    final passPercent = (passProbability * 100).round();
+
+    String preparednessLabel() {
+      if (!hasData) return 'No data yet';
+      if (passProbability >= 0.86) return 'Exam Ready';
+      if (passProbability >= 0.7) return 'Well Prepared';
+      if (passProbability >= 0.5) return 'Making Progress';
+      return 'Keep Practising';
+    }
+
+    String preparednessHint() {
+      if (!hasData) {
+        return 'Complete a theory or mock test to see your pass probability.';
+      }
+      if (passProbability >= 0.86) {
+        return 'You\'re at or above the DVSA pass mark. Keep it up!';
+      }
+      final gap = ((0.86 - passProbability) * 100).ceil();
+      return 'About $gap% away from the typical 86% theory pass mark.';
+    }
 
     // Get dynamic username based on AuthState
     String getGreetingName() {
@@ -157,13 +183,13 @@ class _HomeScreenContent extends ConsumerWidget {
                     ),
                     child: Row(
                       children: [
-                        // Progress ring
+                        // Progress ring — driven by completed test performance
                         CircularPercentIndicator(
                           radius: 45.0,
                           lineWidth: 9.0,
-                          percent: 0.65,
+                          percent: passProbability,
                           center: Text(
-                            "65%",
+                            hasData ? '$passPercent%' : '0%',
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w800,
                               fontSize: 18,
@@ -190,7 +216,7 @@ class _HomeScreenContent extends ConsumerWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'Highly Prepared',
+                                preparednessLabel(),
                                 style: GoogleFonts.outfit(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w800,
@@ -199,7 +225,7 @@ class _HomeScreenContent extends ConsumerWidget {
                               ),
                               const SizedBox(height: 10),
                               Text(
-                                'Practice 120 more questions to reach 90% target probability.',
+                                preparednessHint(),
                                 style: GoogleFonts.outfit(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -244,16 +270,7 @@ class _HomeScreenContent extends ConsumerWidget {
                       color: const Color(0xFF00A896), // Emerald/Teal
                       onTap: () => context.push('/mock-test'),
                     ),
-                    // Card 3: Hazard Perception
-                    _buildFeatureCard(
-                      context: context,
-                      title: 'Hazard Perception',
-                      subtitle: 'Interactive CGI clips',
-                      icon: Icons.visibility_rounded,
-                      color: const Color(0xFFFF8C42), // Orange
-                      onTap: () => context.push('/hazard'),
-                    ),
-                    // Card 4: Highway Code
+                    // Card 3: Highway Code
                     _buildFeatureCard(
                       context: context,
                       title: 'Highway Code',
@@ -262,7 +279,7 @@ class _HomeScreenContent extends ConsumerWidget {
                       color: const Color(0xFF9C27B0), // Purple
                       onTap: () => context.push('/highway'),
                     ),
-                    // Card 5: Road Signs
+                    // Card 4: Road Signs
                     _buildFeatureCard(
                       context: context,
                       title: 'Road Signs',
@@ -299,7 +316,7 @@ class _HomeScreenContent extends ConsumerWidget {
                         const SizedBox(width: 12),
                         Expanded(
                           child: Text(
-                            'Tip: Did you know? 1 in 3 learners fail due to Hazard Perception. Practice daily!',
+                            'Tip: Aim for 86%+ on mock tests — that matches the real DVSA theory pass mark.',
                             style: GoogleFonts.outfit(
                               fontSize: 12,
                               color: theme.colorScheme.onSurface.withAlpha(180),

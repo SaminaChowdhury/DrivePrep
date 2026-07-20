@@ -39,7 +39,7 @@ class DashboardScreen extends ConsumerWidget {
     final String location = GoRouterState.of(context).uri.toString();
     if (location.startsWith('/progress')) return 1;
     if (location.startsWith('/settings')) return 2;
-    return 0; // default is /home (including any sub-theory/hazard/etc. paths)
+    return 0; // default is /home (including theory/highway/signs detail routes)
   }
 
   void _onTabTapped(BuildContext context, int index) {

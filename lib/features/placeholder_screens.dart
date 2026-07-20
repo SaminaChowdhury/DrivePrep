@@ -19,22 +19,6 @@ class DummyTheoryScreen extends StatelessWidget {
   }
 }
 
-class DummyHazardScreen extends StatelessWidget {
-  const DummyHazardScreen({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          'Hazard Perception Clips\n(Feature Coming in Part 4)',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-  }
-}
-
 class DummyHighwayCodeScreen extends StatelessWidget {
   const DummyHighwayCodeScreen({super.key});
   @override

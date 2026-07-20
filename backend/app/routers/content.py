@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Query
 
 from app.services.content_loader import (
-    get_hazard_videos,
     get_highway_code,
     get_questions,
     get_road_signs,
@@ -32,9 +31,3 @@ def list_road_signs(category: str | None = Query(default=None)) -> list[dict]:
 def list_highway_code() -> list[dict]:
     """Return Highway Code reference sections."""
     return get_highway_code()
-
-
-@router.get("/hazard-videos")
-def list_hazard_videos() -> list[dict]:
-    """Return hazard perception video clips metadata."""
-    return get_hazard_videos()
